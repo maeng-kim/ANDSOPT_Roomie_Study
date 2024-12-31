@@ -15,11 +15,11 @@ final class LoginView: UIView {
     
     private let titleLabel = UILabel()
     
-    private let idTextField = UITextField()
+    var idTextField = UITextField()
     
-    private let pwTextField = UITextField()
+    var pwTextField = UITextField()
     
-    private let loginButton = UIButton()
+    let loginButton = UIButton()
     
     // MARK: - Initializer
     
@@ -68,6 +68,7 @@ final class LoginView: UIView {
             $0.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
             $0.backgroundColor = .gray2
             $0.layer.cornerRadius = 12
+            $0.isEnabled = false
         }
     }
     
@@ -81,6 +82,7 @@ final class LoginView: UIView {
     private func setLayout() {
         titleLabel.snp.makeConstraints{
             $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(94)
         }
         
         idTextField.snp.makeConstraints{

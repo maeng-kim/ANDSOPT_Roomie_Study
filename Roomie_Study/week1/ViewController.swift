@@ -17,23 +17,55 @@ class ViewController: UIViewController {
     
     // MARK: - LifeCycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        view = loginView
         
-        setUI()
-        setLayout()
+        setActions()
     }
     
-    // MARK: - UISetting
+    // MARK: - UISettings
     
-    private func setUI() {
-        self.view.addSubview(loginView)
+    private func setActions() {
+        loginView.idTextField.addTarget(self, action: #selector(activateLoginButton), for: .editingChanged)
+        
+        loginView.pwTextField.addTarget(self, action: #selector(activateLoginButton), for: .editingChanged)
+        
+        loginView.loginButton.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
     }
     
-    private func setLayout() {
-        loginView.snp.makeConstraints{
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(94)
+    // MARK: - Functions
+    
+    private func loginAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .cancel))
+        self.present(alert, animated: true)
+    }
+    
+    @objc private func activateLoginButton() {
+        
+        let isIDValid = (loginView.idTextField.text?.count ?? 0) >= 5
+        let isPWValid = (loginView.pwTextField.text?.count ?? 0) >= 8
+        
+        if isIDValid && isPWValid {
+            loginView.loginButton.isEnabled = true
+            loginView.loginButton.backgroundColor = .mainPurple
+        } else {
+            loginView.loginButton.isEnabled = false
+            loginView.loginButton.backgroundColor = .gray2
+        }
+    }
+    
+    @objc private func loginButtonDidTap() {
+        guard let id = loginView.idTextField.text, let pw = loginView.pwTextField.text else {
+            return
+        }
+        
+        let inputLogin = LoginModel(id: id, pw: pw)
+        
+        if inputLogin.id == "rommienotty" && inputLogin.pw == "guhappyshare" {
+            loginAlert(title: "로그인 성공!!", message: "welcome to Roomie")
+        } else {
+            loginAlert(title: "로그인 실패 ㅜ", message: "nagashare")
         }
     }
 }
