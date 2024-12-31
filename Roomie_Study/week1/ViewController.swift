@@ -62,7 +62,7 @@ class ViewController: UIViewController {
         
         let inputLogin = LoginModel(id: id, pw: pw)
         
-        if inputLogin.id == "rommienotty" && inputLogin.pw == "guhappyshare" {
+        if inputLogin.id == "roomienotty" && inputLogin.pw == "guhappyshare" {
             loginAlert(title: "로그인 성공!!", message: "welcome to Roomie")
         } else {
             loginAlert(title: "로그인 실패 ㅜ", message: "nagashare")
