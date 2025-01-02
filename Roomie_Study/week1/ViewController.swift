@@ -15,20 +15,23 @@ class ViewController: UIViewController {
     
     private let loginView = LoginView()
     
+    private let loginViewModel = LoginViewModel()
+    
     // MARK: - LifeCycle
     
     override func loadView() {
         view = loginView
         
         setActions()
+        activateLoginButton()
     }
     
     // MARK: - UISettings
     
     private func setActions() {
-        loginView.idTextField.addTarget(self, action: #selector(activateLoginButton), for: .editingChanged)
+        loginView.idTextField.addTarget(self, action: #selector(loginTextDidChange), for: .editingChanged)
         
-        loginView.pwTextField.addTarget(self, action: #selector(activateLoginButton), for: .editingChanged)
+        loginView.pwTextField.addTarget(self, action: #selector(loginTextDidChange), for: .editingChanged)
         
         loginView.loginButton.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
     }
@@ -41,17 +44,14 @@ class ViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
+    @objc private func loginTextDidChange() {
+        loginViewModel.isLoginValid(id: loginView.idTextField.text, pw: loginView.pwTextField.text)
+    }
+    
     @objc private func activateLoginButton() {
-        
-        let isIDValid = (loginView.idTextField.text?.count ?? 0) >= 5
-        let isPWValid = (loginView.pwTextField.text?.count ?? 0) >= 8
-        
-        if isIDValid && isPWValid {
-            loginView.loginButton.isEnabled = true
-            loginView.loginButton.backgroundColor = .mainPurple
-        } else {
-            loginView.loginButton.isEnabled = false
-            loginView.loginButton.backgroundColor = .gray2
+        loginViewModel.isValid = { [weak self] isValid in
+            self?.loginView.loginButton.isEnabled = isValid ? true: false
+            self?.loginView.loginButton.backgroundColor = isValid ? .mainPurple: .gray2
         }
     }
     
@@ -60,9 +60,9 @@ class ViewController: UIViewController {
             return
         }
         
-        let inputLogin = LoginModel(id: id, pw: pw)
+        loginViewModel.isLoginValid(id: id, pw: pw)
         
-        if inputLogin.id == "roomienotty" && inputLogin.pw == "guhappyshare" {
+        if loginViewModel.checkLogin(id: id, pw: pw) {
             loginAlert(title: "로그인 성공!!", message: "welcome to Roomie")
         } else {
             loginAlert(title: "로그인 실패 ㅜ", message: "nagashare")
