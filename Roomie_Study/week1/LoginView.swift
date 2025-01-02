@@ -48,7 +48,7 @@ final class LoginView: UIView {
         
         idTextField.do {
             $0.placeholder = "아이디"
-            $0.textColor = .gray2
+            $0.textColor = .black
             $0.borderStyle = .roundedRect
             $0.font = .systemFont(ofSize: 16, weight: .medium)
             $0.layer.cornerRadius = 8
@@ -56,7 +56,7 @@ final class LoginView: UIView {
         
         pwTextField.do {
             $0.placeholder = "비밀번호"
-            $0.textColor = .gray2
+            $0.textColor = .black
             $0.borderStyle = .roundedRect
             $0.font = .systemFont(ofSize: 16, weight: .medium)
             $0.layer.cornerRadius = 8

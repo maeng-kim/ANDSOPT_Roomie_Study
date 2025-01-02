@@ -44,18 +44,21 @@ class ViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
-    @objc private func loginTextDidChange() {
+    @objc
+    private func loginTextDidChange() {
         loginViewModel.isLoginValid(id: loginView.idTextField.text, pw: loginView.pwTextField.text)
     }
     
-    @objc private func activateLoginButton() {
+    @objc
+    private func activateLoginButton() {
         loginViewModel.isValid = { [weak self] isValid in
             self?.loginView.loginButton.isEnabled = isValid ? true: false
             self?.loginView.loginButton.backgroundColor = isValid ? .mainPurple: .gray2
         }
     }
     
-    @objc private func loginButtonDidTap() {
+    @objc
+    private func loginButtonDidTap() {
         guard let id = loginView.idTextField.text, let pw = loginView.pwTextField.text else {
             return
         }
@@ -68,8 +71,4 @@ class ViewController: UIViewController {
             loginAlert(title: "로그인 실패 ㅜ", message: "nagashare")
         }
     }
-}
-
-#Preview {
-    ViewController()
 }
