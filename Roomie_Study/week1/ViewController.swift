@@ -51,7 +51,8 @@ class ViewController: UIViewController {
     
     @objc
     private func activateLoginButton() {
-        loginViewModel.isValid = { [weak self] isValid in
+        loginViewModel.isValid.bind { [weak self] isValid in
+            guard let isValid else { return }
             self?.loginView.loginButton.isEnabled = isValid ? true: false
             self?.loginView.loginButton.backgroundColor = isValid ? .mainPurple: .gray2
         }
