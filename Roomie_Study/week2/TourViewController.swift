@@ -83,7 +83,6 @@ final class TourViewController: UIViewController {
     
     @objc
     private func applyTourState() {
-        print("ddd")
         viewModel.state.state = .tour
     }
     
