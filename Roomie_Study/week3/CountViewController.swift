@@ -34,10 +34,6 @@ final class CountViewController: UIViewController {
     private func bind() {
         viewModel.isValid = { [weak self] isValid in
             guard let self = self else { return }
-            if !isValid {
-                rootView.descentButton.isEnabled = false
-                print("Nope")
-            }
         }
     }
     
@@ -46,7 +42,7 @@ final class CountViewController: UIViewController {
             .tapPublisher
             .sink{ [weak self] _ in
                 guard let self = self else { return }
-                let value = self.countSubject.value+1
+                let value = self.countSubject.value + 1
                 self.countSubject.send(value)
 //                self?.countSubject.send(self?.countSubject.value ?? 0 + 1)
             }

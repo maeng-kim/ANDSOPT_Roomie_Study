@@ -10,7 +10,7 @@ final class CountViewModel {
     var isValid: ((Bool) -> Void) = { _ in }
     
     func isNumberValid(num: Int) -> Bool {
-        let validNum = num > 0
+        let validNum = num >= 0
         isValid(validNum)
         return validNum
     }
