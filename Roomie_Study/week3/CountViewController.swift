@@ -27,14 +27,7 @@ final class CountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bind()
         setActions()
-    }
-    
-    private func bind() {
-        viewModel.isValid = { [weak self] isValid in
-            guard let self = self else { return }
-        }
     }
     
     private func setActions() {
